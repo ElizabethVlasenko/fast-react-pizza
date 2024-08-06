@@ -1,16 +1,32 @@
 import { formatCurrency } from "../../utils/helpers";
+import Button from "../../UI/Button";
 
 function MenuItem({ pizza }) {
   const { name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
 
   return (
-    <li>
-      <img src={imageUrl} alt={name} />
-      <div>
-        <p>{name}</p>
-        <p>{ingredients.join(", ")}</p>
-        <div>
-          {!soldOut ? <p>{formatCurrency(unitPrice)}</p> : <p>Sold out</p>}
+    <li className="flex gap-4 py-2">
+      <img
+        src={imageUrl}
+        alt={name}
+        className={`h-24 ${soldOut ? "opacity-70 grayscale" : ""}`}
+      />
+      <div className="flex grow flex-col pt-0.5">
+        <p className="font-medium">{name}</p>
+        <p className="mb-2 text-xs capitalize italic text-stone-500 sm:text-sm">
+          {ingredients.join(", ")}
+        </p>
+        <div className="mt-auto flex items-center justify-between gap-1">
+          {!soldOut ? (
+            <p className="text-sm">{formatCurrency(unitPrice)}</p>
+          ) : (
+            <p className="text-xs font-medium uppercase text-stone-500 sm:text-sm">
+              Sold out
+            </p>
+          )}
+          <Button type="small" disabled={soldOut}>
+            Add to cart
+          </Button>
         </div>
       </div>
     </li>
